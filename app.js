@@ -26,7 +26,7 @@ const dbUrl = process.env.ATLASDB_URL;
 
 main()
      .then(() => {
-        console.log("connected to DB");
+        console.log("connected to DB"); 
      })
      .catch((err) =>{
         console.log(err);
@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 const store =  MongoStore.create({
     mongoUrl : dbUrl,
-    crpto: {
+    crypto: {
         secret: process.env.SECRET,
     },
     touchAfter: 24 * 3600,
@@ -66,6 +66,7 @@ store.on("error", () => {
          httpOnly: true,
         },
     };
+    
 
     // app.get("/" ,(req,res) => {
     //     res.send("Hi, I am root");
@@ -89,16 +90,6 @@ app.use((req,res,next) => {
     res.locals.currUser = req.user;
     next();
 });
-
-// app.get("/demouser", async (req,res) => {
-//     let fakeUser = new User({
-//         email: "student@gmail.com",
-//         username: "delta-student",
-//     });
-
-//     let registeredUser = await User.register(fakeUser, "helloworld");
-//     res.send(registeredUser);
-// });
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
